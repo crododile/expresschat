@@ -28,9 +28,6 @@ App.record = function(data){
 App.chatters = function(data){
 	$('.chatters').html('')
 	for( var id in data ){
-		console.log(App.id)
-		console.log('id ' +id)
-		
 		if ( id == App.id ){
 			 $('.chatters').append(data[id] + " (you)" + '<br>')
 		 }
@@ -55,6 +52,7 @@ $(window).bind('beforeunload', function(){
 App.socket.on('draw', App.draw);
 App.socket.on('message', App.record);
 App.socket.on('connect', function(){
+	$('.chat-area').html('')
 	App.socket.emit('entered', App.name);
 })
 
