@@ -48,4 +48,4 @@ app.get('/', function(req, res) {
     res.sendfile(__dirname + '/client.html')
 })
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
