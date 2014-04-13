@@ -1,3 +1,4 @@
+
 App = {}
 App.socket = io.connect()
 App.usedNames = {}
@@ -82,7 +83,7 @@ $(function() {
 				return
 			}
 		}
-		data = { 'to' : $('.name').val(), 
+		data = { 'to' : _.escape($('.name').val()), 
 		  'from' : App.name,
 	       'num' : App.id }
 		App.socket.emit('rename', data)
@@ -91,7 +92,7 @@ $(function() {
 	
 	$('.msg-btn').click(function(e){
 		e.preventDefault();
-		data = App.name + " : " + $('.msg').val();
+		data = _.escape(App.name + " : " + $('.msg').val());
 		App.socket.emit('message', data);
 		$('.msg').val('')
 	})
