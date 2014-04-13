@@ -1,0 +1,11 @@
+{
+  "name": "GC-Chat",
+  "version": "0.0.1",
+  "description": "node chat for game closure",
+  "dependencies": {
+    "express": "*",
+    "express.io": "~1.1.13",
+	"redis":"*"
+  },
+  "engine": "node >=0.6.x"
+}
