@@ -93,7 +93,21 @@ $(function() {
 		e.preventDefault();
 		data = App.name + " : " + $('.msg').val();
 		App.socket.emit('message', data);
+		$('.msg').val('')
 	})
+	
+	var progress = setInterval(function() {
+	    var $bar = $('.progress-bar');
+    
+	    if ($bar.width()==700) {
+	        clearInterval(progress);
+	        $('.progress').removeClass('active');
+	    } else {
+	        $bar.width($bar.width()+50);
+	    }
+		
+	    $bar.text("loading...");
+	}, 700);
 	
 
 })

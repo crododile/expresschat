@@ -2,16 +2,35 @@
 <script src="//cdn.techpines.io/jquery.event.drag-2.0.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="chat.js"></script>
+<link href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' rel='stylesheet'/>
 <link rel='stylesheet' href='chat.css'/>
 
-<canvas width="500" height="100" style=""></canvas>
-<form>
-	<input class='name'placeholder="name"></input>
-	<button class='name-btn'></button>
-</form>
-<form><input class='msg' placeholder='message'></input>
-	<button class='msg-btn'></button>
-</form>
+<canvas width="800" height="100" style=""></canvas>
+<div class='container'>
+	<div class='row'>
+		<div class='col-xs-1'></div>
+		<div class='col-xs-8'>
+			<form>
+				<input class='name' placeholder="name"/>
+				<button class='name-btn btn btn-primary'>Change Name</button>
+			</form>
+			<form>
+				<input class='msg' placeholder='message'/>
+				<button class='msg-btn btn btn-primary'>Send Message</button>
+			</form>
 
-<div class='chat-area'>connecting....</div>
-<div class='chatters'></div>
+			<div class='chat-area'>
+				<div class="progress">
+				  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+					    <span class="sr-only">Connecting...</span>
+				  </div>
+				</div>
+			   </div>
+			  </div>
+		<div class='col-xs-2'>	
+			<div class='label label-info'>Look who's here</div>
+
+			<div class='chatters'></div>
+		</div>
+	</div>
+</div>

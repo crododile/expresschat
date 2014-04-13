@@ -1,7 +1,8 @@
 .chatters{
 	background-color: red;
-	float: right;
 }
 .chat-area{
+	background-color: yellow;
 	color: blue;
 }
+
