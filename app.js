@@ -35,7 +35,7 @@ app.io.route('entered', function(req){
 
 app.io.route('rename', function(req){
 	msg = req.data['from'] +' is now known as ' + req.data['to']
-	app.names[req.data['num']] = req.data['to']
+	app.names[req.data['num']][0] = req.data['to']
 	req.io.emit('message', msg)
 	req.io.emit('chatters', app.names)
 	req.io.broadcast('message', msg)
