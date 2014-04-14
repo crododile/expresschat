@@ -16,3 +16,10 @@
 	background-color: lightgreen;
 }
 
+.hippo{
+	background: url('http://img1.wikia.nocookie.net/__cb20130406212253/animalcrossing/images/thumb/a/a1/Hippopotamus_1.jpg/290px-Hippopotamus_1.jpg')  no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;;
+}

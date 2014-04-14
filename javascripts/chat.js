@@ -3,12 +3,12 @@ App = {}
 App.socket = io.connect()
 App.usedNames = {}
 App.name = "a new user"
+App.room = "Commons"
 
 // Draw Function
 App.draw = function(data) {
     if (data.type == "dragstart") {
         App.ctx.beginPath()
-		console.log(data.x, data.y)
         App.ctx.moveTo(data.x,data.y)
     } else if (data.type == "drag") {
         App.ctx.lineTo(data.x,data.y)
@@ -21,6 +21,10 @@ App.draw = function(data) {
 
 // put chat messages in the dom
 App.record = function(data){
+	if (data.room) {
+		if (data.room != App.room) return
+		data = data.msg
+	}
 	$('.chat-area').append(data + '<br>');
 }
 
@@ -28,11 +32,12 @@ App.record = function(data){
 App.chatters = function(data){
 	$('.chatters').html('')
 	for( var id in data ){
-		if ( id == App.id ){
-			 $('.chatters').append(data[id] + " (you)" + '<br>')
+		if ( id === App.id  ){
+			 $('.chatters').append(data[id][0] + " (you)" + '<br>')
 		 }
 		else{
-			 $('.chatters').append(data[id] + '<br>')
+			if(data[id][1] === App.room )
+			 $('.chatters').append(data[id][0] + '<br>')
 		 }
 		App.usedNames = data
 	}
@@ -86,11 +91,11 @@ App.cycloid = function(data){
 
 // Draw from other sockets
 App.socket.on('draw', App.draw);
-App.socket.on('message', App.record);
+App.socket.on('message',  App.record );
 App.socket.on('connect', function(){
 	$('.chat-area').html('')
 	App.id = App.socket.socket.sessionid
-	App.socket.emit('entered', App.name);
+	App.socket.emit('entered',{'name': App.name, "room":App.room});
 })
 
 App.socket.on('cycloid', App.cycloid);
@@ -135,9 +140,18 @@ $(function() {
 
 			App.socket.emit('draw', 'd(cycloid)' )
 		}
-		data = _.escape(App.name + " : " + $('.msg').val());
-		App.socket.emit('message', data);
+		msg = _.escape(App.name + " : " + $('.msg').val());
+		App.socket.emit('message', {'msg':msg, 'room':App.room});
 		$('.msg').val('')
+	})
+	
+	$('.room-btn').click(function(e){
+		e.preventDefault();
+		App.socket.emit('leave', {'name':App.name, 'room':App.room})
+		App.room = e.target.textContent
+		App.socket.emit('entered', {'name':App.name, 'room':App.room})
+		$('.chat-area').append('welcome to ' + App.room + '<br>')
+		$('.room-name').text(App.room)
 	})
 	
 	var progress = setInterval(function() {

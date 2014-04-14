@@ -24,10 +24,10 @@ app.io.route('draw', function(req){
 })
 
 app.io.route('entered', function(req){
-	msg = req.data + " has arrived"
-	req.io.broadcast('message', msg)
+	msg = req.data.name + " has arrived in " + req.data.room
+	req.io.broadcast('message', {'msg':msg,'room':req.data.room})
 	app.users += 1
-	app.names[req.io.socket.id] = req.data
+	app.names[req.io.socket.id] = [req.data.name, req.data.room]
 
 	req.io.emit('chatters', app.names)
 	req.io.broadcast('chatters', app.names)
@@ -42,11 +42,16 @@ app.io.route('rename', function(req){
 	req.io.broadcast('chatters', app.names)
 })
 
+app.io.route('leave', function(req){
+		msg = app.names[req.io.socket.id][0] + " has left " + app.names[req.io.socket.id][1]
+		req.io.broadcast('message', {'msg':msg, 'room':app.names[req.io.socket.id][1]})
+})
+
 app.io.route('disconnect', function(req){
 	app.users -= 1
-	msg = app.names[req.io.socket.id] + " has left"
+	msg = app.names[req.io.socket.id][0] + " has left " + app.names[req.io.socket.id][1]
+	req.io.broadcast('message', {'msg':msg, 'room':app.names[req.io.socket.id][1]})
 	delete app.names[req.io.socket.id]
-	req.io.broadcast('message', msg)
 	req.io.broadcast('chatters', app.names)
 })
 
