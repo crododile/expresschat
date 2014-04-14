@@ -13,6 +13,7 @@ App.draw = function(data) {
     } else if (data.type == "drag") {
         App.ctx.lineTo(data.x,data.y)
         App.ctx.stroke()
+		console.log(data.x)
     } else {
         App.ctx.stroke()
         App.ctx.closePath()
@@ -84,7 +85,7 @@ App.cycloid = function(data){
 	   	degTick += 0.05;
         centerX = homeX + ( degTick * (2 * Math.PI * radius ) );
 	   	App.ctx.stroke()
-		if (centerX > 1250) clearInterval(rollin)
+		if (centerX > 1360) clearInterval(rollin)
    }, 60)
 	
 }
