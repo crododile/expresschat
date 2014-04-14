@@ -10,6 +10,7 @@ App.id = 0
 App.draw = function(data) {
     if (data.type == "dragstart") {
         App.ctx.beginPath()
+		console.log(data.x, data.y)
         App.ctx.moveTo(data.x,data.y)
     } else if (data.type == "drag") {
         App.ctx.lineTo(data.x,data.y)
@@ -45,6 +46,46 @@ App.setId = function(data){
 	}
 }
 
+App.cycloid = function(data){
+
+    App.ctx.fillStyle = "black";
+       
+	   radius = 30;
+	   centerX= 20;
+	   homeX = 20;
+	   centerY = 40;
+	   degTick = 0;
+	   windPoints = []
+	   App.ctx.beginPath();
+	  var rollin = setInterval(function(){ 
+	
+	   	leadingX = centerX + radius * Math.cos( (1/2)*Math.PI + degTick * ( 2 * Math.PI) );
+	   	leadingY = centerY + radius * Math.sin( (1/2)*Math.PI + degTick * ( 2 * Math.PI) );
+			  console.log(leadingX, leadingY)
+	   	windPoints.push( [ leadingX, leadingY ] )
+
+
+	   	for( var i = 0; i < windPoints.length; i++ ){
+	   		App.ctx.fillRect( windPoints[i][0] , windPoints[i][1], 20, 1 );
+	   		if ( i % 5 === 0 ) App.ctx.fillStyle = 'blue';
+	   		else if ( i % 4 === 0 ) App.ctx.fillStyle = 'green';
+	   		else App.ctx.fillStyle = 'red'
+	   	}
+
+	   	App.ctx.fillStyle = 'red'
+
+	   	line = ( 1 - degTick ) * ( 2 * Math.PI * radius );
+
+	   	App.ctx.fillRect( leadingX, leadingY, 20, 2 );
+
+	   	degTick += 0.05;
+        centerX = homeX + ( degTick * (2 * Math.PI * radius ) );
+	   	App.ctx.stroke()
+		if (centerX > 2000) clearInterval(rollin)
+   }, 100)
+	
+}
+
 $(window).bind('beforeunload', function(){
 	App.socket.emit('leaving', App.id )
 });
@@ -56,6 +97,8 @@ App.socket.on('connect', function(){
 	$('.chat-area').html('')
 	App.socket.emit('entered', App.name);
 })
+
+App.socket.on('cycloid', App.cycloid);
 
 App.socket.on('sendId', App.setId);
 
@@ -92,6 +135,11 @@ $(function() {
 	
 	$('.msg-btn').click(function(e){
 		e.preventDefault();
+
+		if( $('.msg').val() == "d(cycloid)" ){
+
+			App.socket.emit('draw', 'd(cycloid)' )
+		}
 		data = _.escape(App.name + " : " + $('.msg').val());
 		App.socket.emit('message', data);
 		$('.msg').val('')

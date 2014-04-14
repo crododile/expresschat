@@ -1,8 +1,18 @@
 .chatters{
 	background-color: red;
+	height: 60%;
+	font-family: Lucida;
+	font-size: 14px;
 }
+
 .chat-area{
 	background-color: yellow;
 	color: blue;
+	height: 70%;
+	overflow: auto;
+}
+
+.canvas{
+	
 }
 

@@ -6,7 +6,7 @@
 <link href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' rel='stylesheet'/>
 <link rel='stylesheet' href='chat.css'/>
 
-<canvas width="800" height="100" style=""></canvas>
+<canvas width="1500" height="100" class="canvas well well-sm"></canvas>
 <div class='container'>
 	<div class='row'>
 		<div class='col-xs-1'></div>
@@ -20,7 +20,7 @@
 				<button class='msg-btn btn btn-primary'>Send Message</button>
 			</form>
 
-			<div class='chat-area'>
+			<div class='well chat-area'>
 				<div class="progress">
 				  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 					    <span class="sr-only">Connecting...</span>
@@ -29,9 +29,11 @@
 			   </div>
 			  </div>
 		<div class='col-xs-2'>	
-			<div class='label label-info'>Look who's here</div>
+				<div class='btn btn-warning'>Look who's here</div>
 
-			<div class='chatters'></div>
+			<div class='well-small chatters'>
+			
+			</div>
 		</div>
 	</div>
 </div>

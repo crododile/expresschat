@@ -18,6 +18,11 @@ app.io.route('message', function(req){
 	req.io.emit('message', req.data)
 })
 
+app.io.route('draw', function(req){
+	req.io.broadcast('cycloid', req.data)
+	req.io.emit('cycloid', req.data)
+})
+
 app.io.route('entered', function(req){
 	msg = req.data + " has arrived"
 	req.io.broadcast('message', msg)
