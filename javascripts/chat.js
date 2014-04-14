@@ -86,6 +86,8 @@ App.cycloid = function(data){
 	
 }
 
+
+
 $(window).bind('beforeunload', function(){
 	App.socket.emit('leaving', App.id )
 });
