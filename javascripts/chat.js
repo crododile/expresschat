@@ -84,8 +84,8 @@ App.cycloid = function(data){
 	   	degTick += 0.05;
         centerX = homeX + ( degTick * (2 * Math.PI * radius ) );
 	   	App.ctx.stroke()
-		if (centerX > 2000) clearInterval(rollin)
-   }, 100)
+		if (centerX > 1250) clearInterval(rollin)
+   }, 60)
 	
 }
 
@@ -152,6 +152,17 @@ $(function() {
 		App.socket.emit('entered', {'name':App.name, 'room':App.room})
 		$('.chat-area').append('welcome to ' + App.room + '<br>')
 		$('.room-name').text(App.room)
+	})
+	
+	$('.cycloid').click(function(e){
+		e.preventDefault();
+		App.socket.emit('draw', 'd(cycloid)' )
+	})
+	
+	$('.erase').click(function(e){
+		e.preventDefault();
+		var canvas = $('canvas')[0]
+		canvas.getContext('2d').clearRect(0,0, canvas.width, canvas.height );
 	})
 	
 	var progress = setInterval(function() {
