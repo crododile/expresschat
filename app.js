@@ -27,8 +27,8 @@ app.io.route('entered', function(req){
 	msg = req.data + " has arrived"
 	req.io.broadcast('message', msg)
 	app.users += 1
-	app.names[app.users] = req.data
-	req.io.emit('sendId', app.users)
+	app.names[req.io.socket.id] = req.data
+
 	req.io.emit('chatters', app.names)
 	req.io.broadcast('chatters', app.names)
 })
@@ -42,9 +42,10 @@ app.io.route('rename', function(req){
 	req.io.broadcast('chatters', app.names)
 })
 
-app.io.route('leaving', function(req){
-	msg = app.names[req.data] + " has left"
-	delete app.names[req.data]
+app.io.route('disconnect', function(req){
+	app.users -= 1
+	msg = app.names[req.io.socket.id] + " has left"
+	delete app.names[req.io.socket.id]
 	req.io.broadcast('message', msg)
 	req.io.broadcast('chatters', app.names)
 })

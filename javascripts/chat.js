@@ -4,8 +4,6 @@ App.socket = io.connect()
 App.usedNames = {}
 App.name = "a new user"
 
-App.id = 0
-
 // Draw Function
 App.draw = function(data) {
     if (data.type == "dragstart") {
@@ -86,17 +84,12 @@ App.cycloid = function(data){
 	
 }
 
-
-
-$(window).bind('beforeunload', function(){
-	App.socket.emit('leaving', App.id )
-});
-
 // Draw from other sockets
 App.socket.on('draw', App.draw);
 App.socket.on('message', App.record);
 App.socket.on('connect', function(){
 	$('.chat-area').html('')
+	App.id = App.socket.socket.sessionid
 	App.socket.emit('entered', App.name);
 })
 
